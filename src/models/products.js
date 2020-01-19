@@ -3,7 +3,7 @@ const connection = require('../config/mysql');
 module.exports={
     getAll : ()=>{
         return new Promise((resolve,reject)=>{
-            connection.query('select * from products',(err,res)=>{
+            connection.query('SELECT * from products',(err,res)=>{
                 if(!err){
                     resolve(res);
                 }
