@@ -6,19 +6,26 @@ const {
     updateProduct
     } = require('../models/products');
 
+const helper = require('../helper')
+
 module.exports = {
     getAllProducts : async (req,res)=>{
-        const result = await getAll();
-        return res.json(result);
+        try {
+            const result = await getAll();
+            return helper.response(res,200,result);
+        } catch (error) {
+            return helper.response(res,400,error);
+        }
+
     },
     deleteProduct : async (req,res)=>{
         try {
             const id = req.params.product_id;
             // console.log(id);
             const result = await deleteProduct(id);
-            return res.json(result);
+            return helper.response(res,200,result);
         } catch (error) {
-            throw error;
+            return helper.response(res,400,error);
         }
     },
     createProduct : async (req,res)=>{
@@ -31,9 +38,9 @@ module.exports = {
                 product_price : req.body.product_price,
             }
             const result = await createProduct(setData);
-            return res.json(result)
+            return helper.response(res,200,result);
         } catch (error) {
-            throw error
+            return helper.response(res,400,error);
         }
     },
     updateProduct : async (req,res)=>{
@@ -47,9 +54,9 @@ module.exports = {
             }
             const id = req.params.product_id
             const result = await updateProduct(setData,id);
-            return res.json(result)
+            return helper.response(res,200,result);
         } catch (error) {
-            return error
+            return helper.response(res,400,error);
         }
     },
 }
