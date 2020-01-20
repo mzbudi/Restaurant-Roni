@@ -74,7 +74,28 @@ module.exports={
                 }else{
                     reject(new Error(error));
                 }
+            })
         })
+    },
+    getSearchByName : (nameSearch)=>{
+        return new Promise((resolve,reject)=>{
+            connection.query('SELECT * FROM products where product_name like ?',['%'+nameSearch+'%'],(err,res)=>{
+                if(!err){
+                    resolve(res)
+                }
+                reject(new Error(err))
+            })
         })
-    }
+    },
+    sortFunction : (sorterName)=>{
+        return new Promise((resolve,reject)=>{
+            console.log(sorterName)
+            connection.query('SELECT * FROM products Order by '+sorterName,(err,res)=>{
+                if(!err){
+                    resolve(res)
+                }
+                reject(new Error(err))
+            })
+        })
+    },
 }

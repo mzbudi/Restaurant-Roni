@@ -3,7 +3,9 @@ const {
     getAll,
     deleteProduct,
     createProduct,
-    updateProduct
+    updateProduct,
+    getSearchByName,
+    sortFunction,
     } = require('../models/products');
 
 const helper = require('../helper')
@@ -58,4 +60,22 @@ module.exports = {
             return helper.response(res,400,error);
         }
     },
+    getSearchByName : async (req,res)=>{
+        try {
+            const nameSearch = req.body.searchKeyword
+            const result = await getSearchByName(nameSearch);
+            return helper.response(res,200,result);
+        } catch (error) {
+            throw error
+        }
+    },
+    sortFunction : async (req,res)=>{
+        try {
+            const sorterName = req.body.sorterName
+            const result = await sortFunction(sorterName);
+            return helper.response(res,200,result)
+        } catch (error) {
+            return helper.response(res,400,result)
+        }
+    }
 }
