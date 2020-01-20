@@ -6,6 +6,7 @@ const {
     updateProduct,
     getSearchByName,
     sortFunction,
+    getNamebyCatorDate
     } = require('../models/products');
 
 const helper = require('../helper')
@@ -13,10 +14,38 @@ const helper = require('../helper')
 module.exports = {
     getAllProducts : async (req,res)=>{
         try {
-            const result = await getAll();
-            return helper.response(res,200,result);
+            const data = {
+                nameSearch : req.query.nameSearch,
+                category_id : req.query.category_id,
+                date : req.query.date
+            }
+            const {nameSearch, category_id,date} = data
+            // console.log(data);
+            // console.log(nameSearch,category_id,date);
+            if((nameSearch == undefined && category_id == undefined) && date == undefined){
+                resultAll = await getAll();
+                return helper.response(res,200,resultAll);
+            }else if(nameSearch != undefined){
+                if(category_id != undefined){
+                        resultNameCatDate = await getNamebyCatorDate(nameSearch,category_id);
+                        return helper.response(res,200,resultNameCatDate);
+                }else if(date != undefined){
+                        resultNameCatDate = await getNamebyCatorDate(nameSearch,date);
+                        return helper.response(res,200,resultNameCatDate);
+                }else{
+                    resultName = await getSearchByName(nameSearch)
+                    return helper.response(res,200,resultName);
+                }
+            }else if(category_id != undefined){
+                resultCategory = await sortFunction(category_id);
+                return helper.response(res,200,resultCategory);
+            }else{
+                resultDate = await sortFunction(date);
+                return helper.response(res,200,resultDate);
+            }
         } catch (error) {
-            return helper.response(res,400,error);
+            // return helper.response(res,400,error);
+            throw error
         }
 
     },

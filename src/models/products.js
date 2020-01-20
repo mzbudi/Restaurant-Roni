@@ -77,7 +77,7 @@ module.exports={
             })
         })
     },
-    getSearchByName : (nameSearch)=>{
+    getSearchByName : (nameSearch) =>{
         return new Promise((resolve,reject)=>{
             connection.query('SELECT * FROM products where product_name like ?',['%'+nameSearch+'%'],(err,res)=>{
                 if(!err){
@@ -98,4 +98,15 @@ module.exports={
             })
         })
     },
+    getNamebyCatorDate : (nameSearch,orderBy)=>{
+        console.log(orderBy);
+        return new Promise((resolve,reject)=>{
+            connection.query(`SELECT * FROM products WHERE product_name LIKE '%${nameSearch}%' ORDER BY ${orderBy} ASC`, (err,res)=>{
+                if(!err){
+                    resolve(res);
+                }
+                reject(new Error(err));
+            })
+        })
+    }
 }
