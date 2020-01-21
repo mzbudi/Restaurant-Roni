@@ -3,10 +3,12 @@ const Route = express.Router();
 
 const product = require('./routes/products.js');
 const category = require('./routes/category.js');
-const order = require('./routes/order.js')
+const order = require('./routes/order.js');
+const auth = require('./routes/auth.js');
 
 Route.use('/products', product);
 Route.use('/category', category);
 Route.use('/order', order);
+Route.use('/auth', auth);
 
 module.exports = Route;
