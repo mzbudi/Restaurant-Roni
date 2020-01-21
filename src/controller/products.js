@@ -16,36 +16,22 @@ module.exports = {
         try {
             const data = {
                 nameSearch : req.query.nameSearch,
+                product_name : req.query.product_name,
                 category_id : req.query.category_id,
                 date : req.query.date,
+                limit : req.query.limit,
                 page : req.query.page,
-                limit : req.query.limit
             }
-            const {nameSearch, category_id,date} = data
-             console.log(data);
-            // console.log(nameSearch,category_id,date);
-            // let limit = 
-            if((nameSearch == undefined && category_id == undefined) && date == undefined){
-                resultAll = await getAll();
-                return helper.response(res,200,resultAll);
-            }else if(nameSearch != undefined){
-                if(category_id != undefined){
-                        resultNameCatDate = await getNamebyCatorDate(nameSearch,category_id);
-                        return helper.response(res,200,resultNameCatDate);
-                }else if(date != undefined){
-                        resultNameCatDate = await getNamebyCatorDate(nameSearch,date);
-                        return helper.response(res,200,resultNameCatDate);
-                }else{
-                    resultName = await getSearchByName(nameSearch)
-                    return helper.response(res,200,resultName);
-                }
-            }else if(category_id != undefined){
-                resultCategory = await sortFunction(category_id);
-                return helper.response(res,200,resultCategory);
-            }else{
-                resultDate = await sortFunction(date);
-                return helper.response(res,200,resultDate);
-            }
+            let {nameSearch, product_name, category_id, date ,page, limit} = data
+            nameSearch == undefined ?  nameSearch = '' : nameSearch;
+            category_id == undefined ?  category_id = '' : category_id = 'category_id asc,';
+            product_name == undefined ?  product_name = '' : product_name = 'product_name asc,';
+            date == undefined ?  date = '' : date = 'updated_at desc,';
+            limit == undefined ?  limit = '1000' : limit;
+            page == undefined ?  page = '0' : page *= 5;
+            console.log(nameSearch, category_id, date, page,limit);
+            const result = await getAll(nameSearch,product_name,category_id,date,limit,page);
+            return helper.response(res,200,result);
         } catch (error) {
             // return helper.response(res,400,error);
             throw error
