@@ -9,7 +9,8 @@ Route
     .delete('/:product_id',deleteProduct)
     .put('/:product_id',fileUpload.single('product_image'), updateProduct)
     .post('/',fileUpload.single('product_image'),createProduct)
-    .get('/search',getSearchByName)
-    .get('/sort',sortFunction)
+    // unused function
+    // .get('/search',getSearchByName)
+    // .get('/sort',sortFunction)
 
 module.exports = Route;

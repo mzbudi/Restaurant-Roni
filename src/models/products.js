@@ -101,7 +101,7 @@ module.exports={
     getNamebyCatorDate : (nameSearch,orderBy)=>{
         console.log(orderBy);
         return new Promise((resolve,reject)=>{
-            connection.query(`SELECT * FROM products WHERE product_name LIKE '%${nameSearch}%' ORDER BY ${orderBy} ASC`, (err,res)=>{
+            connection.query(`SELECT * FROM products WHERE product_name LIKE '%${nameSearch}%' ORDER BY ${orderBy} ASC LIMIT 1 OFFSET 0`, (err,res)=>{
                 if(!err){
                     resolve(res);
                 }

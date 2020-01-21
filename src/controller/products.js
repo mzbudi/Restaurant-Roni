@@ -17,11 +17,14 @@ module.exports = {
             const data = {
                 nameSearch : req.query.nameSearch,
                 category_id : req.query.category_id,
-                date : req.query.date
+                date : req.query.date,
+                page : req.query.page,
+                limit : req.query.limit
             }
             const {nameSearch, category_id,date} = data
-            // console.log(data);
+             console.log(data);
             // console.log(nameSearch,category_id,date);
+            // let limit = 
             if((nameSearch == undefined && category_id == undefined) && date == undefined){
                 resultAll = await getAll();
                 return helper.response(res,200,resultAll);
