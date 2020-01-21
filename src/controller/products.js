@@ -29,12 +29,11 @@ module.exports = {
             date == undefined ?  date = '' : date = 'updated_at desc,';
             limit == undefined ?  limit = '1000' : limit;
             page == undefined ?  page = '0' : page *= 5;
-            console.log(nameSearch, category_id, date, page,limit);
+            // console.log(nameSearch, category_id, date, page,limit);
             const result = await getAll(nameSearch,product_name,category_id,date,limit,page);
             return helper.response(res,200,result);
         } catch (error) {
-            // return helper.response(res,400,error);
-            throw error
+            return helper.response(res,400,error);
         }
 
     },

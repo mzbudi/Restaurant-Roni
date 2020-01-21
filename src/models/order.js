@@ -28,18 +28,34 @@ module.exports = {
             })
         })
     },
-    addItemOrders : (order_id,orders)=>{
+    getAllOrders : ()=>{
         return new Promise((resolve,reject)=>{
-            orders.forEach(setData => {
-                connection.query('INSERT INTO order_detail SET ?',[setData,order_id],(err,res)=>{
-                    if(!err){
-                        resolve({
-                            message : "Pembelian Berhasil"
-                        })
-                    }
-                    reject(new Error(err))
-                })
-            });
+            connection.query('SELECT orders.order_id, orders.user_id, order_detail.product_id, order_detail.quantity, order_detail.product_price, orders.created_at FROM orders JOIN order_detail WHERE orders.order_id = order_detail.order_id ',(err,res)=>{
+                if(!err){
+                    resolve(res);
+                }
+                reject(err);
+            })
+        })
+    },
+    getOrder : (order_id)=>{
+        return new Promise((resolve,reject)=>{
+            connection.query('SELECT orders.order_id, orders.user_id, order_detail.product_id, order_detail.quantity, order_detail.product_price, orders.created_at FROM orders JOIN order_detail WHERE orders.order_id=? and order_detail.order_id = ?',(err,res)=>{
+                if(!err){
+                    resolve(res);
+                }
+                reject(err);
+            })
+        })
+    },
+    getOrderByDate : (date)=>{
+        return new Promise((resolve,reject)=>{
+            connection.query('SELECT orders.order_id, orders.user_id, order_detail.product_id, order_detail.quantity, order_detail.product_price, orders.created_at FROM orders JOIN order_detail WHERE orders.order_id=? and order_detail.order_id = ?',(err,res)=>{
+                if(!err){
+                    resolve(res);
+                }
+                reject(err);
+            })
         })
     }
 }

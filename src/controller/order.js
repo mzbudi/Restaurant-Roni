@@ -25,11 +25,18 @@ module.exports = {
                     return res.json({message : 'Error Quantity'});
                 }else{
                     const order_id = await addOrder(user_id,orders);
-                    // console.log(order_id);
-                    return res.json(order_id)
+                    return helper.response(res,400,error)
                 }
         }catch(error){
             throw error
+        }
+    },
+    getOrder : async (req,res)=>{
+        try {
+            const result = await getOrder();
+            return helper.response(res,200,result)
+        } catch (error) {
+            return helper.response(res,400,error)
         }
     }
 }
