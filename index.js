@@ -2,18 +2,12 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const routerNav = require('./src');
-const cors = require('cors');
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:true,
 }))
-
-// app.use(cors({
-//     origin: '127.0.0.1:3001/category'
-// }));
-
-// app.use(cors());
 
 const server = app.listen(3001,"127.0.0.1",function(){
     const host = server.address().address

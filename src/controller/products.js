@@ -6,7 +6,7 @@ const {
     updateProduct,
     getSearchByName,
     sortFunction,
-    getNamebyCatorDate
+    getById,
     } = require('../models/products');
 
 const helper = require('../helper')
@@ -93,6 +93,15 @@ module.exports = {
             return helper.response(res,200,result)
         } catch (error) {
             return helper.response(res,400,result)
+        }
+    },
+    getById : async (req,res)=>{
+        try {
+            const product_id = req.params.product_id;
+            const result = await getById(product_id)
+            return helper.response(res,200,result)
+        } catch (error) {
+            return helper.response(res,400,error)
         }
     }
 }

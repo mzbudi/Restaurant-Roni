@@ -1,5 +1,5 @@
 const helper = require('../helper/');
-const {addOrder, addItemOrders} = require('../models/order');
+const {addOrder, addItemOrders, getOrder, getAllOrders} = require('../models/order');
 
 module.exports = {
     addOrder : async (req,res)=>{
@@ -24,19 +24,30 @@ module.exports = {
                 if(errorOrder.length > 0){
                     return res.json({message : 'Error Quantity'});
                 }else{
-                    const order_id = await addOrder(user_id,orders);
-                    return helper.response(res,400,error)
+                    const result = await addOrder(user_id,orders);
+                    return helper.response(res,200,result)
                 }
         }catch(error){
-            throw error
+            return helper.response(res,400,error);
         }
     },
     getOrder : async (req,res)=>{
         try {
-            const result = await getOrder();
+            const order_id = req.params.order_id
+            const result = await getOrder(order_id);
             return helper.response(res,200,result)
         } catch (error) {
-            return helper.response(res,400,error)
+            throw error
+            // return helper.response(res,400,error)
+        }
+    },
+    getAllOrders : async (req,res) =>{
+        try {
+            const result = await getAllOrders()
+            return helper.response(res,200,result);
+        } catch (error) {
+            throw error
+            // return helper.response(res,400,error)
         }
     }
 }
