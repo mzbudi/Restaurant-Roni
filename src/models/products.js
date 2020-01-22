@@ -4,7 +4,7 @@ const fs = require('fs');
 module.exports={
     getAll : (nameSearch,product_name,category_id,date,limit,page)=>{
         return new Promise((resolve,reject)=>{
-            console.log(`SELECT * FROM products WHERE product_name LIKE '%${nameSearch}%'`);
+            console.log(`SELECT * FROM products WHERE product_name LIKE '%${nameSearch}%' limit ${limit} offset ${page}`);
             connection.query(`SELECT * FROM products WHERE product_name LIKE '%${nameSearch}%' ORDER BY ${product_name} ${category_id} ${date} product_id LIMIT ${limit} OFFSET ${page}`,(err,res)=>{
                 if(!err){
                     resolve(res);

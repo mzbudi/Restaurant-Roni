@@ -23,12 +23,12 @@ module.exports = {
                 page : req.query.page,
             }
             let {nameSearch, product_name, category_id, date ,page, limit} = data
-            nameSearch == undefined ?  nameSearch = '' : nameSearch;
-            category_id == undefined ?  category_id = '' : category_id = 'category_id asc,';
-            product_name == undefined ?  product_name = '' : product_name = 'product_name asc,';
-            date == undefined ?  date = '' : date = 'updated_at desc,';
-            limit == undefined ?  limit = '1000' : limit;
-            page == undefined ?  page = '0' : page *= 5;
+            nameSearch == undefined || nameSearch == '' ?  nameSearch = '' : nameSearch;
+            category_id == undefined || category_id == '' ?  category_id = '' : category_id = 'category_id asc,';
+            product_name == undefined || product_name == '' ?  product_name = '' : product_name = 'product_name asc,';
+            date == undefined || date =='' ?  date = '' : date = 'updated_at desc,';
+            limit == undefined || limit == '' ?  limit = '1000' : limit;
+            page == undefined || page == ''?  page = '0' : page *= 5;
             // console.log(nameSearch, category_id, date, page,limit);
             const result = await getAll(nameSearch,product_name,category_id,date,limit,page);
             return helper.response(res,200,result);

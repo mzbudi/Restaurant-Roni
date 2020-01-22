@@ -45,7 +45,7 @@ module.exports = {
                     // })
                     PPn = 0.10*totalPrice;
                     const result = await addOrder(user_id,orders,invoice_number,totalPrice,PPn);
-                    return helper.response(res,200,result)
+                    return helper.response(res,200,{result, invoice:invoice_number})
                 }
         }catch(error){
             return helper.response(res,400,error);
@@ -64,6 +64,11 @@ module.exports = {
             }else if(data.search_by == 'invoice'){
                 const result = await getOrderByInvoice(data.invoice_number);
                 return helper.response(res,200,result)
+                // console.log('invoice')
+            }else if(data.search_by == '' || data.search_by == undefined){
+                const result = await getAllOrders()
+                return helper.response(res,200,result);
+                // console.log('invoice')
             }else{
                 return helper.response(res,400,{message:"Masukan Pencarian Dengan Benar"})
             }
@@ -72,6 +77,7 @@ module.exports = {
             return helper.response(res,400,{message:"Masukan Pencarian Dengan Benar"})
         }
     },
+    //unused function
     getAllOrders : async (req,res) =>{
         try {
             const result = await getAllOrders()

@@ -4,8 +4,7 @@ const {addOrder, getAllOrders, getOrder}= require('../controller/order');
 const {authorization} = require('../middleware/authentication')
 
 Route
-    .get('/',authorization,getAllOrders)
     .post('/',authorization, addOrder)
-    .get('/',authorization,getOrder)
+    .get('/',authorization, getOrder)
 
 module.exports = Route;
