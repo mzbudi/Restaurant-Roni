@@ -12,6 +12,7 @@ module.exports = {
             let keyData = ''
             const resultLoginKey = await userLoginKey(data);
             keyData = String(resultLoginKey[0].p_key);
+            console.log(keyData)
 
             var sha512 = function(password, salt){
                 var hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
@@ -26,14 +27,14 @@ module.exports = {
             newPassword = sha512(data.password, keyData)
             console.log(newPassword);
 
-            data.password =newPassword.passwordHash;
+            data.password = newPassword.passwordHash;
             console.log(data);
 
             const resultLogin = await userLogin(data);
             const token = jwt.sign({resultLogin},'zxc123',{expiresIn : '1h'})
-            return helper.response(res,200,{token, res : resultLogin});
+            return helper.response(res,200,{token, userData : resultLogin});
         } catch (error) {
-            return helper.response(res,200,{message : "Login Gagal"})
+            return helper.response(res,400,{message : "Login Gagal"})
         }
     },
     createUser : async (req,res)=>{

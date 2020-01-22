@@ -1,5 +1,5 @@
 const helper = require('../helper/');
-const {addOrder, addItemOrders, getOrder, getAllOrders} = require('../models/order');
+const {addOrder, getOrderByInvoice, getOrder, getAllOrders} = require('../models/order');
 
 module.exports = {
     addOrder : async (req,res)=>{
@@ -48,18 +48,28 @@ module.exports = {
                     return helper.response(res,200,result)
                 }
         }catch(error){
-            // return helper.response(res,400,error);
-            throw error
+            return helper.response(res,400,error);
         }
     },
     getOrder : async (req,res)=>{
         try {
-            const order_id = req.params.order_id
-            const result = await getOrder(order_id);
-            return helper.response(res,200,result)
+            const data = {
+                search_by : req.query.search_by,
+                order_id : req.query.order_id,
+                invoice_number : req.query.invoice_number
+            }
+            if(data.search_by == 'id'){
+                const result = await getOrder(data.order_id);
+                return helper.response(res,200,result)
+            }else if(data.search_by == 'invoice'){
+                const result = await getOrderByInvoice(data.invoice_number);
+                return helper.response(res,200,result)
+            }else{
+                return helper.response(res,400,{message:"Masukan Pencarian Dengan Benar"})
+            }
         } catch (error) {
-            throw error
-            // return helper.response(res,400,error)
+            // throw error
+            return helper.response(res,400,{message:"Masukan Pencarian Dengan Benar"})
         }
     },
     getAllOrders : async (req,res) =>{
@@ -67,8 +77,8 @@ module.exports = {
             const result = await getAllOrders()
             return helper.response(res,200,result);
         } catch (error) {
-            throw error
-            // return helper.response(res,400,error)
+            // throw error
+            return helper.response(res,400,error)
         }
     }
 }

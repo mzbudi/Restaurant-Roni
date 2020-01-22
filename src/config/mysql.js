@@ -7,9 +7,12 @@ const connection = mysql.createConnection({
     database : 'restaurant-roni',
 })
 
-connection.connect((error)=>{
-    if(error) throw error
-    console.log("You are now Connected !");
+connection.connect((error,res)=>{
+    if(error){console.log('Database Belum Tekoneksi')
+    }else{
+        console.log("You are now Connected !");
+    }
+
 });
 
 module.exports = connection;

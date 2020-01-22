@@ -43,7 +43,7 @@ module.exports = {
             const result = await deleteProduct(id);
             return helper.response(res,200,result);
         } catch (error) {
-            return helper.response(res,400,error);
+            return helper.response(res,400,{message: "Terjadi Kesalahan"});
         }
     },
     createProduct : async (req,res)=>{
@@ -58,7 +58,7 @@ module.exports = {
             const result = await createProduct(setData);
             return helper.response(res,200,result);
         } catch (error) {
-            return helper.response(res,400,error);
+            return helper.response(res,400,{message : "Data Tidak Lengkap"});
         }
     },
     updateProduct : async (req,res)=>{
@@ -74,7 +74,7 @@ module.exports = {
             const result = await updateProduct(setData,id);
             return helper.response(res,200,result);
         } catch (error) {
-            return helper.response(res,400,error);
+            return helper.response(res,400,{message : "Data Tidak Lengkap / Tidak ada"});
         }
     },
     getSearchByName : async (req,res)=>{
@@ -83,7 +83,7 @@ module.exports = {
             const result = await getSearchByName(nameSearch);
             return helper.response(res,200,result);
         } catch (error) {
-            throw error
+            return helper.response(res,400,{message : "Data Tidak Ada"});
         }
     },
     sortFunction : async (req,res)=>{
@@ -101,7 +101,7 @@ module.exports = {
             const result = await getById(product_id)
             return helper.response(res,200,result)
         } catch (error) {
-            return helper.response(res,400,error)
+            return helper.response(res,400,{message : "Data Tidak Ada"});
         }
     }
 }

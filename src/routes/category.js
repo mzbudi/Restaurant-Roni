@@ -7,12 +7,13 @@ const {
     updateCategory,
     createCategory,
     } = require('../controller/category');
+const {authorization} = require('../middleware/authentication');
 
 Route
-    .get('/', getAllCategory)
-    .get('/:category_id', getCategory)
-    .put('/:category_id', updateCategory)
-    .post('/', createCategory)
-    .delete('/:category_id', deleteCategory)
+    .get('/',authorization, getAllCategory)
+    .get('/:category_id',authorization, getCategory)
+    .put('/:category_id',authorization, updateCategory)
+    .post('/',authorization, createCategory)
+    .delete('/:category_id',authorization, deleteCategory)
 
 module.exports = Route

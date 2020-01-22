@@ -33,15 +33,17 @@ module.exports = {
             const result = await deleteCategory(id);
             return helper.response(res,200,result);
         } catch (error) {
-            return helper.response(res,400,result);
+            return helper.response(res,400,{message : "Data Tidak Boleh Kosong"});
         }
     } ,
-    //disalahin ini
     updateCategory : async (req,res)=>{
         try {
             const setData = req.body;
             const id = req.params.category_id;
-            console.log(setData, id);
+            if(setData.category_name == ''|| setData.category_name == undefined){
+                return helper.response(res,400,{message: "Data Tidak Boleh Kosong"});
+            }
+            // console.log(setData, id);
             const result = await updateCategory(setData,id);
             return helper.response(res,200,result);
         } catch (error) {
@@ -51,10 +53,13 @@ module.exports = {
     createCategory : async (req,res)=>{
         try {
             const setData = req.body;
+            if(setData.category_name == ''|| setData.category_name == undefined){
+                return helper.response(res,400,{message: "Data Tidak Boleh Kosong"});
+            }
             const result = await createCategory(setData);
             return helper.response(res,200,result);
         } catch (error) {
-            return helper.response(res,400,result);
+            return helper.response(res,400,{message: "Terjadi Kesalahan"});
         }
     }
     //
