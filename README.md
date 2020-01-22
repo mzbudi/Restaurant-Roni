@@ -1,7 +1,7 @@
 # Restaurant-Roni
 Project ini adalah Rest-API yang digunakan untuk memenuhi tugas praktek dari Coding Bootcamp Arkademy.
 
-##Instalasi
+## Instalasi
 
 - Untuk melakukan menggunakan api silakan di download atau di clone dengan perintah : 
 	```git clone https://github.com/mzbudi/Restaurant-Roni.git```
@@ -11,13 +11,13 @@ Project ini adalah Rest-API yang digunakan untuk memenuhi tugas praktek dari Cod
 
 - Selanjutnya buat database dengan nama restaurant-roni dan import database restaurant-roni.sql
 
--Masukan code 
+- Masukan code 
 	```"start": "nodemon index.js" kedalam script package.json```
 
 - Selanjutnya tuliskan perintah ini untuk memulai API :
 	```yarn start```
   
-##Dokumentasi Folder
+## Dokumentasi Folder
   src
   index
   1. Config:
@@ -48,7 +48,7 @@ Project ini adalah Rest-API yang digunakan untuk memenuhi tugas praktek dari Cod
     > auth
     > category
   
-##Dokumentasi API
+## Dokumentasi API
   1. products
       - Get /products/:id_product
             /products/?date=updated_at&nameSearch=a&category_id=category_id&limit=1&page=2&productName=product_name
