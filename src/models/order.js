@@ -49,7 +49,27 @@ module.exports = {
     },
     getOrderByInvoice : (invoice_number)=>{
         return new Promise((resolve,reject)=>{
-            connection.query(`SELECT orders.order_id, orders.invoice_number, orders.user_id, order_detail.product_id, order_detail.quantity, order_detail.product_price, orders.created_at FROM orders JOIN order_detail WHERE orders.invoice_number = ${invoice_number} `,(err,res)=>{
+            connection.query(`SELECT orders.order_id, orders.invoice_number, orders.user_id, order_detail.product_id, order_detail.quantity, order_detail.product_price, order_detail.subTotal, orders.created_at FROM orders JOIN order_detail WHERE orders.invoice_number = ${invoice_number} AND orders.order_id = order_detail.order_id`,(err,res)=>{
+                if(!err){
+                    resolve(res);
+                }
+                reject(err);
+            })
+        })
+    },
+    getGrandTotalByInvoice : (invoice_number)=>{
+        return new Promise((resolve,reject)=>{
+            connection.query(`SELECT subtotal,PPn from orders WHERE invoice_number = ${invoice_number}`,(err,res)=>{
+                if(!err){
+                    resolve(res);
+                }
+                reject(err);
+            })
+        })
+    },
+    getGrandTotalById : (order_id)=>{
+        return new Promise((resolve,reject)=>{
+            connection.query(`SELECT subtotal,PPn from orders WHERE order_id = ${order_id}`,(err,res)=>{
                 if(!err){
                     resolve(res);
                 }

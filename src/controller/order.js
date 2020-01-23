@@ -1,5 +1,5 @@
 const helper = require('../helper/');
-const {addOrder, getOrderByInvoice, getOrder, getAllOrders} = require('../models/order');
+const {addOrder, getOrderByInvoice, getOrder, getAllOrders, getGrandTotalById , getGrandTotalByInvoice} = require('../models/order');
 
 module.exports = {
     addOrder : async (req,res)=>{
@@ -60,10 +60,12 @@ module.exports = {
             }
             if(data.search_by == 'id'){
                 const result = await getOrder(data.order_id);
-                return helper.response(res,200,result)
+                const grandTotalPPn = await getGrandTotalById(data.order_id);
+                return helper.response(res,200,{result, grandTotalPPn})
             }else if(data.search_by == 'invoice'){
                 const result = await getOrderByInvoice(data.invoice_number);
-                return helper.response(res,200,result)
+                const grandTotalPPn = await getGrandTotalByInvoice(data.invoice_number);
+                return helper.response(res,200,{result, grandTotalPPn})
                 // console.log('invoice')
             }else if(data.search_by == '' || data.search_by == undefined){
                 const result = await getAllOrders()
