@@ -100,9 +100,7 @@ module.exports={
         })
     },
     getById : (product_id)=>{
-        console.log(product_id);
         return new Promise((resolve,reject)=>{
-            console.log(product_id);
             connection.query(`SELECT * FROM products WHERE product_id = ${product_id}`, (err,res)=>{
                 if(!err){
                     resolve(res);

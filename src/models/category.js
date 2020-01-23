@@ -50,7 +50,7 @@ module.exports = {
         return result = new Promise((resolve,reject)=>{
             connection.query('DELETE FROM categories WHERE category_id = ?', [id], (err,res)=>{
                 if(!err){
-                    resolve(res)
+                    resolve(res.affectedRows)
                 }
                 reject(new Error(err))
             })

@@ -31,7 +31,11 @@ module.exports = {
         try {
             const id = req.params.category_id;
             const result = await deleteCategory(id);
-            return helper.response(res,200,result);
+            if(result < 1){
+                return helper.response(res,400,{message: "Data Tidak Ada"});
+            }else{
+                return helper.response(res,200,{message: "Data Berhasil Dihapus"});
+            }
         } catch (error) {
             return helper.response(res,400,{message : "Data Tidak Boleh Kosong"});
         }
@@ -43,7 +47,6 @@ module.exports = {
             if(setData.category_name == ''|| setData.category_name == undefined){
                 return helper.response(res,400,{message: "Data Tidak Boleh Kosong"});
             }
-            // console.log(setData, id);
             const result = await updateCategory(setData,id);
             return helper.response(res,200,result);
         } catch (error) {
@@ -62,5 +65,4 @@ module.exports = {
             return helper.response(res,400,{message: "Terjadi Kesalahan"});
         }
     }
-    //
 }

@@ -29,7 +29,6 @@ module.exports = {
             date == undefined || date =='' ?  date = '' : date = 'updated_at desc,';
             limit == undefined || limit == '' ?  limit = '1000' : limit;
             page == undefined || page == ''?  page = '0' : page *= 5;
-            // console.log(nameSearch, category_id, date, page,limit);
             const result = await getAll(nameSearch,product_name,category_id,date,limit,page);
             return helper.response(res,200,result);
         } catch (error) {
@@ -43,11 +42,12 @@ module.exports = {
             const result = await deleteProduct(id);
             return helper.response(res,200,result);
         } catch (error) {
-            return helper.response(res,400,{message: "Terjadi Kesalahan"});
+            return helper.response(res,400,{message: "Data Tidak ada"});
         }
     },
     createProduct : async (req,res)=>{
         try {
+            let errorArr = []
             const setData = {
                 category_id : req.body.category_id,
                 product_name : req.body.product_name,
@@ -55,8 +55,17 @@ module.exports = {
                 product_image : req.file.path,
                 product_price : req.body.product_price,
             }
-            const result = await createProduct(setData);
-            return helper.response(res,200,result);
+           const {category_id, product_name, product_description, product_price} = setData;
+           category_id == undefined || category_id == '' ?  errorArr.push(1) : errorArr;
+           product_name == undefined || product_name == '' ?  errorArr.push(1) : errorArr;
+           product_description == undefined || product_description == '' ?  errorArr.push(1) : errorArr;
+           product_price == undefined || product_price == '' ?  errorArr.push(1) : errorArr;
+           if (errorArr.length > 0) {
+                return helper.response(res,400,{message : "Data Tidak Lengkap"});
+           } else {
+                const result = await createProduct(setData);
+                return helper.response(res,200,{message : "Data Berhasil di Input", product_id: result.insertId});
+           }
         } catch (error) {
             return helper.response(res,400,{message : "Data Tidak Lengkap"});
         }
@@ -71,8 +80,21 @@ module.exports = {
                 product_price : req.body.product_price,
             }
             const id = req.params.product_id
+            let errorArr = []
+
+            const {category_id, product_name, product_description, product_price} = setData;
+            category_id == undefined || category_id == '' ?  errorArr.push(1) : errorArr;
+            product_name == undefined || product_name == '' ?  errorArr.push(1) : errorArr;
+            product_description == undefined || product_description == '' ?  errorArr.push(1) : errorArr;
+            product_price == undefined || product_price == '' ?  errorArr.push(1) : errorArr;
+            id == undefined || id == '' ? errorArr.push(1) : errorArr;
+            
+            if (errorArr.length > 0) {
+                return helper.response(res,400,{message : "Data Tidak Lengkap"});
+            } else {
             const result = await updateProduct(setData,id);
             return helper.response(res,200,result);
+            }
         } catch (error) {
             return helper.response(res,400,{message : "Data Tidak Lengkap / Tidak ada"});
         }
@@ -99,6 +121,9 @@ module.exports = {
         try {
             const product_id = req.params.product_id;
             const result = await getById(product_id)
+            if(result.length < 1){
+                return helper.response(res,400,{message : "Data Tidak Ada"});
+            }
             return helper.response(res,200,result)
         } catch (error) {
             return helper.response(res,400,{message : "Data Tidak Ada"});

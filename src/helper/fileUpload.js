@@ -12,7 +12,17 @@ const storage = multer.diskStorage({
 });
 
 const fileUpload = multer({
-    storage : storage
+    storage : storage,
+    fileFilter: function (req,file,callback){
+        var ext = path.extname(file.originalname);
+        if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg' && ext !== '.PNG' && ext !== '.JPEG' && ext !== '.JPG'){
+            return callback(new Error('Only Image Are Allowed'))
+        }
+        callback(null,true)
+    },
+    limits:{
+        fileSize: 1024 * 1024
+    }
 })
 
 module.exports = fileUpload;
