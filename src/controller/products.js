@@ -1,12 +1,17 @@
 // const express = require('express');
 const {
     getAll,
+    getAllData,
     deleteProduct,
     createProduct,
     updateProduct,
     getSearchByName,
+    getSearchByNameAll,
     sortFunction,
+    sortFunctionAll,
     getById,
+    getSearchByCategoryId,
+    getSearchByCategoryIdAll
     } = require('../models/products');
 
 const helper = require('../helper')
@@ -14,6 +19,8 @@ const helper = require('../helper')
 module.exports = {
     getAllProducts : async (req,res)=>{
         try {
+            let searchTotal = ''
+            let searchResult = []
             const data = {
                 nameSearch : req.query.nameSearch,
                 product_name : req.query.product_name,
@@ -21,18 +28,41 @@ module.exports = {
                 date : req.query.date,
                 limit : req.query.limit,
                 page : req.query.page,
+                sorter: req.query.sorter,
             }
-            let {nameSearch, product_name, category_id, date ,page, limit} = data
+            let {nameSearch, product_name, category_id, date ,page, limit, sorter} = data
             nameSearch == undefined || nameSearch == '' ?  nameSearch = '' : nameSearch;
-            category_id == undefined || category_id == '' ?  category_id = '' : category_id = 'category_id asc,';
-            product_name == undefined || product_name == '' ?  product_name = '' : product_name = 'product_name asc,';
-            date == undefined || date =='' ?  date = '' : date = 'updated_at desc,';
-            limit == undefined || limit == '' ?  limit = '1000' : limit;
+            category_id == undefined || category_id == '' ?  category_id = '' : category_id;
+            product_name == undefined || product_name == '' ?  product_name = '' : product_name = 'product_name';
+            date == undefined || date =='' ?  date = '' : date = 'updated_at';
+            limit == undefined || limit == '' ?  limit = '5' : limit;
             page == undefined || page == ''?  page = '0' : page *= 5;
-            const result = await getAll(nameSearch,product_name,category_id,date,limit,page);
-            return helper.response(res,200,result);
+            sorter == undefined || sorter == ''?  sorter = 'asc' : sorter = 'desc';
+
+            if(nameSearch !==''){
+                searchTotal = await getSearchByNameAll(nameSearch);
+                searchResult = await getSearchByName(nameSearch,limit,page);
+            }else if(category_id !== ''){
+                searchTotal = await getSearchByCategoryIdAll(category_id);
+                searchResult = await getSearchByCategoryId(category_id,limit,page);
+            }else if(product_name !== ''){
+                searchTotal = await sortFunctionAll(product_name);
+                searchResult = await sortFunction(product_name,limit,page,sorter)
+            }else if(product_name !== ''){
+                searchTotal = await sortFunctionAll(product_name);
+                searchResult = await sortFunction(product_name,limit,page,sorter)
+            }else if(date !== ''){
+                console.log(date)
+                searchTotal = await sortFunctionAll(date);
+                searchResult = await sortFunction(date,limit,page,sorter)
+            }else{
+                searchTotal = await getAll();
+                searchResult = await getAllData(limit,page)
+            }
+
+            return helper.response(res,200,{totalData : searchTotal.length, searchResult});
         } catch (error) {
-            return helper.response(res,400,error);
+            return helper.response(res,400,{message: "Data Tidak Ditemukan"});
         }
 
     },

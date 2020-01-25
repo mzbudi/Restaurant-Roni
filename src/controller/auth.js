@@ -12,7 +12,6 @@ module.exports = {
             let keyData = ''
             const resultLoginKey = await userLoginKey(data);
             keyData = String(resultLoginKey[0].p_key);
-            console.log(keyData)
 
             var sha512 = function(password, salt){
                 var hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
@@ -25,10 +24,8 @@ module.exports = {
             };
 
             newPassword = sha512(data.password, keyData)
-            console.log(newPassword);
 
             data.password = newPassword.passwordHash;
-            console.log(data);
 
             const resultLogin = await userLogin(data);
             const token = jwt.sign({resultLogin},'zxc123',{expiresIn : '1h'})
@@ -70,16 +67,13 @@ module.exports = {
                     function saltHashPassword(userpassword) {
                         var salt = genRandomString(16); /** Gives us salt of length 16 */
                         var passwordData = sha512(userpassword, salt);
-                        console.log('UserPassword = '+userpassword);
-                        console.log('Passwordhash = '+passwordData.passwordHash);
                         p_key = passwordData.salt;
                         pHash = passwordData.passwordHash;
                     }
 
                 saltHashPassword(req.body.password);
-                data.password = pHash,
+                data.password = pHash
                 data.p_key = p_key
-                // console.log(data);
                 const result = await createUser(data)
                 return helper.response(res,200,{message:"Username Berhasil Dibuat"})
             };
