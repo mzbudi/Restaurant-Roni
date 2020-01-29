@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended:true,
 }))
-app.use(express.static('assets/images'))
+app.use(express.static('assets/'))
 const server = app.listen(3001,"127.0.0.1",function(){
     const host = server.address().address
     const port = server.address().port

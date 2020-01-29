@@ -119,7 +119,6 @@ module.exports={
     },
     sortFunction : (sorterName,limit,page,sorter)=>{
         return new Promise((resolve,reject)=>{
-            console.log(`SELECT * FROM products Order by ${sorterName} ${sorter} LIMIT ${limit} OFFSET ${page} `)
 
             connection.query(`SELECT * FROM products Order by ${sorterName} ${sorter} LIMIT ${limit} OFFSET ${page} `,(err,res)=>{
                 if(!err){
@@ -152,7 +151,7 @@ module.exports={
     },
     getSearchByCategoryId : (category_id,limit,page)=>{
         return new Promise((resolve,reject)=>{
-            connection.query(`SELECT products.product_name, products.product_description, products.product_image, products.product_price , categories.category_id, categories.category_name FROM products JOIN categories WHERE categories.category_id = ${category_id} AND products.category_id = ${category_id} LIMIT ${limit} OFFSET ${page}`,[category_id,category_id],(err,res)=>{
+            connection.query(`SELECT products.product_id, products.product_name, products.product_description, products.product_image, products.product_price , categories.category_id, categories.category_name FROM products JOIN categories WHERE categories.category_id = ${category_id} AND products.category_id = ${category_id} LIMIT ${limit} OFFSET ${page}`,[category_id,category_id],(err,res)=>{
                 if(!err){
                     resolve(res)
                 }
@@ -162,7 +161,7 @@ module.exports={
     },
     getSearchByCategoryIdAll : (category_id)=>{
         return new Promise((resolve,reject)=>{
-            connection.query("SELECT products.product_name, products.product_description, products.product_image, products.product_price , categories.category_id, categories.category_name FROM products JOIN categories WHERE categories.category_id = ? AND products.category_id = ?",[category_id,category_id],(err,res)=>{
+            connection.query("SELECT products.product_id, products.product_name, products.product_description, products.product_image, products.product_price , categories.category_id, categories.category_name FROM products JOIN categories WHERE categories.category_id = ? AND products.category_id = ?",[category_id,category_id],(err,res)=>{
                 if(!err){
                     resolve(res)
                 }

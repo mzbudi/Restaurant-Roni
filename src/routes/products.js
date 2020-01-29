@@ -10,7 +10,7 @@ const multer = require('multer')
 Route
     .get('/', getAllProducts)
     .delete('/:product_id',authorization, deleteProduct)
-    .put('/:product_id',authorization, fileUpload.single('product_image'), updateProduct)
+    .put('/:product_id', fileUpload.single('product_image'), updateProduct)
     .post('/',authorization,fileUpload.single('product_image'),createProduct)
     .get('/:product_id',authorization, getById)
     // .get('/sort',sortFunction)
