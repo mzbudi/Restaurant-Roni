@@ -10,8 +10,8 @@ const {
 const {authorization} = require('../middleware/authentication');
 
 Route
-    .get('/', getAllCategory)
-    .get('/:category_id', getCategory)
+    .get('/',authorization, getAllCategory)
+    .get('/:category_id',authorization, getCategory)
     .put('/:category_id',authorization, updateCategory)
     .post('/',authorization, createCategory)
     .delete('/:category_id',authorization, deleteCategory)

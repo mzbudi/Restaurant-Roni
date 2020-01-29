@@ -7,11 +7,25 @@ const upload = fileUpload.single('product_image')
 const helper = require('../helper')
 const multer = require('multer')
 
+const uploadFilter = (req,res,next) =>{
+    upload(req,res,(err)=>{
+        if(err instanceof multer.MulterError){
+            return helper.response(res,400,{message : "File Tidak Cocok"})
+            throw err
+        }else if (err){
+            return helper.response(res,400,{message : "File Tidak Cocok"})
+            throw err
+        }
+        next()
+    })
+}
+
+
 Route
-    .get('/', getAllProducts)
+    .get('/',authorization, getAllProducts)
     .delete('/:product_id',authorization, deleteProduct)
-    .put('/:product_id', fileUpload.single('product_image'), updateProduct)
-    .post('/',authorization,fileUpload.single('product_image'),createProduct)
+    .put('/:product_id',authorization, uploadFilter, updateProduct)
+    .post('/',authorization,uploadFilter,createProduct)
     .get('/:product_id',authorization, getById)
     // .get('/sort',sortFunction)
 
