@@ -22,7 +22,7 @@ const uploadFilter = (req,res,next) =>{
 
 
 Route
-    .get('/',authorization, getAllProducts)
+    .get('/', getAllProducts)
     .delete('/:product_id',authorization, deleteProduct)
     .put('/:product_id',authorization, uploadFilter, updateProduct)
     .post('/',authorization,uploadFilter,createProduct)

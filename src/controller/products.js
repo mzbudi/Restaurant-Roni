@@ -48,11 +48,7 @@ module.exports = {
             }else if(product_name !== ''){
                 searchTotal = await sortFunctionAll(product_name);
                 searchResult = await sortFunction(product_name,limit,page,sorter)
-            }else if(product_name !== ''){
-                searchTotal = await sortFunctionAll(product_name);
-                searchResult = await sortFunction(product_name,limit,page,sorter)
             }else if(date !== ''){
-                console.log(date)
                 searchTotal = await sortFunctionAll(date);
                 searchResult = await sortFunction(date,limit,page,sorter)
             }else{

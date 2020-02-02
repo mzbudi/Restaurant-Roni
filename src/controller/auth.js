@@ -29,8 +29,8 @@ module.exports = {
 
             const resultLogin = await userLogin(data);
             const token = jwt.sign({resultLogin},'zxc123',{expiresIn : '1h'})
-            const {user_id, username, name} = resultLogin[0]
-            return helper.response(res,200,{token, username, user_id, name});
+            const {user_id, user_role, username, name} = resultLogin[0]
+            return helper.response(res,200,{token, username, user_id, user_role, name});
         } catch (error) {
             return helper.response(res,400,{message : "Login Gagal"})
         }
@@ -38,6 +38,7 @@ module.exports = {
     createUser : async (req,res)=>{
         try {
             const data = {
+                user_role: '2',
                 username : req.body.username,
                 password : req.body.password,
                 name : req.body.name
