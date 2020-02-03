@@ -12,4 +12,24 @@ module.exports={
             })
         })
     },
+    deleteUser : (user_id)=>{
+        return new Promise((resolve,reject)=>{
+            connection.query(`DELETE FROM user WHERE user_id = ${user_id}`, (err,res)=>{
+                if(!err){
+                    resolve(res);
+                }
+                reject(new Error(err));
+            })
+        })
+    },
+    updateUser : (setData, id)=>{
+        return new Promise((resolve,reject)=>{
+            connection.query('UPDATE user SET ? WHERE user_id = ?',[setData,id],(err,res)=>{
+                if(!err){
+                    resolve(res);
+                }
+                reject(new Error(err));
+            })
+        })
+    }
 }

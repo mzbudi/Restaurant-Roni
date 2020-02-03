@@ -1,8 +1,11 @@
 const express = require('express');
 const Route = express.Router();
-const {getUser} = require('../controller/users');
+const {getUser,deleteUser,updateUser} = require('../controller/users');
+const {authorization} = require('../middleware/authentication')
 
 Route
-    .get('/',getUser)
+    .get('/',authorization,getUser)
+    .delete('/:user_id',authorization,deleteUser)
+    .put('/:user_id',authorization,updateUser)
 
 module.exports = Route

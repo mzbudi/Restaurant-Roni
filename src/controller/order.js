@@ -37,12 +37,6 @@ module.exports = {
                 if(errorOrder.length > 0){
                     return res.json({message : 'Error Quantity'});
                 }else{
-                    // return res.json({
-                    //     orders : orders,
-                    //     totalPrice : totalPrice,
-                    //     invoice_number: invoice_number,
-                    //     PPn : 0.10*totalPrice
-                    // })
                     PPn = 0.10*totalPrice;
                     const result = await addOrder(user_id,orders,invoice_number,totalPrice,PPn);
                     return helper.response(res,200,{result, invoice:invoice_number})
@@ -66,11 +60,9 @@ module.exports = {
                 const result = await getOrderByInvoice(data.invoice_number);
                 const grandTotalPPn = await getGrandTotalByInvoice(data.invoice_number);
                 return helper.response(res,200,{result, grandTotalPPn})
-                // console.log('invoice')
             }else if(data.search_by == '' || data.search_by == undefined){
                 const result = await getAllOrders()
                 return helper.response(res,200,result);
-                // console.log('invoice')
             }else{
                 return helper.response(res,400,{message:"Masukan Pencarian Dengan Benar"})
             }
