@@ -5,6 +5,6 @@ const {authorization} = require('../middleware/authentication')
 
 Route
     .post('/',authorization, addOrder)
-    .get('/',authorization, getOrder)
+    .get('/',authorization, getAllOrders)
 
 module.exports = Route;

@@ -29,7 +29,7 @@ module.exports = {
     },
     getAllOrders : ()=>{
         return new Promise((resolve,reject)=>{
-            connection.query('SELECT orders.order_id, orders.invoice_number, orders.user_id, order_detail.product_id, order_detail.quantity, order_detail.product_price, orders.created_at FROM orders JOIN order_detail WHERE orders.order_id = order_detail.order_id ',(err,res)=>{
+            connection.query('SELECT orders.order_id, orders.invoice_number, orders.user_id, orders.PPn, orders.subTotal, orders.created_at FROM orders ORDER BY orders.created_at DESC LIMIT 999999 OFFSET 1',(err,res)=>{
                 if(!err){
                     resolve(res);
                 }

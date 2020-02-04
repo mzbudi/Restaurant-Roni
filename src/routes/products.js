@@ -11,10 +11,8 @@ const uploadFilter = (req,res,next) =>{
     upload(req,res,(err)=>{
         if(err instanceof multer.MulterError){
             return helper.response(res,400,{message : "File Tidak Cocok"})
-            throw err
         }else if (err){
             return helper.response(res,400,{message : "File Tidak Cocok"})
-            throw err
         }
         next()
     })
