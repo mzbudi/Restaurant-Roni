@@ -71,8 +71,7 @@ module.exports = {
                 console.log(setData)
                 return helper.response(res,200,{message:"Data Berhasil Diubah"})
         } catch (error) {
-            // return helper.response(res,400,err);
-            throw error
+            return helper.response(res,400,error);
         }
     }
 }

@@ -45,7 +45,7 @@ module.exports = {
             }
             const result = await userCheck(data)
             if(result.length >= 1){
-                return helper.response(res,200,{message : "Username Sudah Ada"})
+                return helper.response(res,304,{message : "Username Sudah Ada"})
             }else{
                 let p_key = '';
                 let pHash = '';
