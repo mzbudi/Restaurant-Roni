@@ -1,5 +1,13 @@
 const helper = require('../helper/');
-const {addOrder, getOrderByInvoice, getOrder, getAllOrders, getGrandTotalById , getGrandTotalByInvoice} = require('../models/order');
+const {
+    addOrder, 
+    getOrderByInvoice, 
+    getOrder, 
+    getAllOrders, 
+    getGrandTotalById , 
+    getGrandTotalByInvoice, 
+    getOrdersById,
+    getDetailOrder} = require('../models/order');
 
 module.exports = {
     addOrder : async (req,res)=>{
@@ -71,7 +79,6 @@ module.exports = {
             return helper.response(res,400,{message:"Masukan Pencarian Dengan Benar"})
         }
     },
-    //unused function
     getAllOrders : async (req,res) =>{
         try {
             const result = await getAllOrders()
@@ -80,5 +87,26 @@ module.exports = {
             // throw error
             return helper.response(res,400,error)
         }
-    }
+    },
+
+    getOrderById : async (req,res)=>{
+        try {
+            const id= req.params.user_id
+            const result = await getOrdersById(id)
+            return helper.response(res,200,result)
+        } catch (error) {
+            return helper.response(res,400,error)
+        }
+    },
+
+    getOrderDetailById : async (req,res)=>{
+        try {
+            const id= req.params.user_id
+            const result = await getDetailOrder(id)
+            return helper.response(res,200,result)
+        } catch (error) {
+            return helper.response(res,400,error)
+        }
+    },
+
 }

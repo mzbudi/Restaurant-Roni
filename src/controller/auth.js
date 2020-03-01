@@ -29,8 +29,8 @@ module.exports = {
 
             const resultLogin = await userLogin(data);
             const token = jwt.sign({resultLogin},'zxc123',{expiresIn : '1h'})
-            const {user_id, user_role, username, name} = resultLogin[0]
-            return helper.response(res,200,{token, username, user_id, user_role, name});
+            const {user_id, user_role, username, name, profile_picture, created_at} = resultLogin[0]
+            return helper.response(res,200,{token, username, user_id, user_role, name, profile_picture, created_at});
         } catch (error) {
             return helper.response(res,400,{message : "Login Gagal"})
         }
@@ -38,10 +38,11 @@ module.exports = {
     createUser : async (req,res)=>{
         try {
             const data = {
-                user_role: '2',
+                user_role: req.body.user_role === undefined ? '2' : '3',
                 username : req.body.username,
                 password : req.body.password,
-                name : req.body.name
+                name : req.body.name,
+                profile_picture : req.file === undefined ? '' : req.file.path
             }
             const result = await userCheck(data)
             if(result.length >= 1){
@@ -79,7 +80,7 @@ module.exports = {
                 return helper.response(res,200,{message:"Username Berhasil Dibuat"})
             };
         } catch (error) {
-            return helper.response(res,200,result)
+            return helper.response(res,400,error)
         }
     }
 }

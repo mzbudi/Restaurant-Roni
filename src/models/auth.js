@@ -3,9 +3,9 @@ const connection = require('../config/mysql');
 module.exports = {
     userLogin : (data)=>{
         return new Promise((resolve,reject)=>{
-            connection.query('SELECT user_id, user_role, username, name FROM user WHERE username = ? AND password = ?',[data.username, data.password],(err,res)=>{
+            connection.query('SELECT user_id, user_role, username, name, profile_picture, created_at FROM user WHERE username = ? AND password = ?',[data.username, data.password],(err,res)=>{
                 if(!err){
-                    if(res.length > 0 ){
+                    if(res.length >= 0 ){
                         resolve(res);
                     }
                     reject(new Error(err));

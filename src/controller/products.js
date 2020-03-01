@@ -34,7 +34,7 @@ module.exports = {
             nameSearch == undefined || nameSearch == '' ?  nameSearch = '' : nameSearch;
             category_id == undefined || category_id == '' ?  category_id = '' : category_id;
             product_name == undefined || product_name == '' ?  product_name = '' : product_name = 'product_name';
-            date == undefined || date =='' ?  date = '' : date = 'updated_at';
+            date == undefined || date =='' ?  date = '' : date = 'created_at';
             limit == undefined || limit == '' ?  limit = '5' : limit;
             page == undefined || page == ''?  page = '0' : page *= 5;
             sorter == undefined || sorter == ''?  sorter = 'asc' : sorter = 'desc';
@@ -50,7 +50,7 @@ module.exports = {
                 searchResult = await sortFunction(product_name,limit,page,sorter)
             }else if(date !== ''){
                 searchTotal = await sortFunctionAll(date);
-                searchResult = await sortFunction(date,limit,page,sorter)
+                searchResult = await sortFunction(date,limit,page,'desc')
             }else{
                 searchTotal = await getAll();
                 searchResult = await getAllData(limit,page)

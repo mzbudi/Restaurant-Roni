@@ -31,5 +31,15 @@ module.exports={
                 reject(new Error(err));
             })
         })
+    },
+    getProfile : (id)=>{
+        return new Promise((resolve,reject)=>{
+            connection.query(`SELECT username, name, profile_picture FROM user WHERE user_id = ${id}`,(err,res)=>{
+                if(!err){
+                    resolve(res);
+                }
+                reject(new Error(err));
+            })
+        })
     }
 }

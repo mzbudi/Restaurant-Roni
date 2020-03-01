@@ -87,5 +87,25 @@ module.exports = {
                 reject(err);
             })
         })
+    },
+    getOrdersById : (id) =>{
+        return new Promise((resolve,reject)=>{
+            connection.query(`SELECT * FROM orders WHERE orders.user_id = ${id} ORDER BY orders.order_id DESC`,(err,res)=>{
+                if(!err){
+                    resolve(res);
+                }
+                reject(err);
+            })
+        })
+    },
+    getDetailOrder : (id)=>{
+        return new Promise((resolve,reject)=>{
+            connection.query(`SELECT orders.order_id, orders.invoice_number, orders.user_id, order_detail.product_id, order_detail.quantity, order_detail.product_price, order_detail.subTotal, orders.created_at FROM orders JOIN order_detail WHERE orders.order_id = ${id} AND orders.order_id = order_detail.order_id`,(err,res)=>{
+                if(!err){
+                    resolve(res);
+                }
+                reject(err)
+            })
+        })
     }
 }
