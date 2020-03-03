@@ -12,6 +12,28 @@ module.exports={
     //         })
     //     })
     // },
+    getImage : (id) =>{
+      return new Promise((resolve,reject)=>{
+        connection.query('SELECT product_image FROM products WHERE product_id = ?', [id], (err,res)=>{
+          if(!err){
+            resolve(res);
+          }
+          reject(new Error(err));
+        })
+      })
+    },
+
+    updateProductTry1 : (setData, id) =>{
+      return new Promise((resolve,reject)=>{
+        connection.query('UPDATE products SET ? WHERE product_id = ?', [setData,id],(err,res)=>{
+          if(!err){
+            resolve(res);
+          }
+          reject(new Error(err));
+        })
+      })
+    },
+
     getAll : ()=>{
         return new Promise((resolve,reject)=>{
             connection.query(`SELECT * FROM products`,(err,res)=>{
@@ -22,6 +44,7 @@ module.exports={
             })
         })
     },
+
     getAllData : (limit,page)=>{
         return new Promise((resolve,reject)=>{
             connection.query(`SELECT * FROM products LIMIT ${limit} OFFSET ${page}`,(err,res)=>{
