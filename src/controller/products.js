@@ -122,7 +122,7 @@ module.exports = {
             id === undefined || id === '' ? errorArr.push(1) : errorArr;
 
             if (errorArr.length > 0) {
-                return helper.response(res, 400, { message: "Data Tidak Lengkap" });
+                return helper.response(res, 400, { message: "All Form Must be Filled" });
             } else if(errorArr !== 0 && product_image === '' ){
                 const resImage = await getImage(id);
                 setData.product_image = resImage[0].product_image;
